@@ -1,0 +1,126 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Ajouter une affectation</h4>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <mat-form-field class="spacing">
+                    <mat-label>Personnel</mat-label>
+                    <mat-select name="personnel" [(ngModel)]="
+                        this.AffectationTotale.personnel.id_personnel
+                      " ngDefaultControl>
+                      <mat-option *ngFor="let item of this.personnel" [value]="item.id_personnel">
+                        {{ item.nom }} {{ item.prenom }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <mat-form-field class="spacing">
+                    <mat-label>Affectation</mat-label>
+                    <mat-select name="site" [(ngModel)]="this.AffectationTotale.site.idSite" [(ngModel)]="selectedLevel"
+                      (change)="selected()" ngDefaultControl required>
+                      <mat-option *ngFor="let item of this.site" [value]="item.idSite">
+                        {{ item.nom_etablissement_fr }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-8 mb-3">
+                  <table style="margin-top: -10px;" class="table">
+                    <thead style="color: #919191;">
+                      <tr>
+                        <th style="font-size: inherit;">Nature Etablissement</th>
+                        <th style="font-size: inherit;">Gouvernorat</th>
+                        <th style="font-size: inherit;">Qualité de direction</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of this.site">
+                        <td *ngIf="item.idSite === selectedLevel ">{{ item.nature_etablissement_fr }}</td>
+                        <td *ngIf="item.idSite === selectedLevel ">{{ item.gouvernorat.nomGouvFR }}</td>
+                        <td *ngIf="item.idSite === selectedLevel ">{{ item.qualite_direction_fr }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="row">
+
+
+                <div class="col-md-4 mb-3">
+                  <label class="control-label" for="Direction">Direction:</label>
+                  <select name="dir" *ngIf="getDirections()" [(ngModel)]="this.AffectationTotale.structure.direction"
+                    (change)="onSelectDirection($event.target.value)" class="form-control input-lg" id="direction">
+                    <option value="0">Selectionnez Direction</option>
+                    <option *ngFor="let direction of getDirections()" value={{direction.id}}>{{direction.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="control-label" for="Divisions">Divisions:</label>
+                  <select name="div" *ngIf="divisions" [(ngModel)]="this.AffectationTotale.structure.division"
+                    (change)="onSelectDivision($event.target.value)" class="form-control input-lg" id="division">
+                    <option value="0">Selectionnez Division</option>
+                    <option *ngFor="let division of divisions" value={{division.id}}>{{division.name}}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="control-label" for="Service">Service:</label>
+                  <select name="serv" class="form-control input-lg" id="serv"
+                    [(ngModel)]="this.AffectationTotale.structure.service">
+                    <option *ngIf="!selectedDivision" value="0">Selectionnez Service</option>
+                    <option *ngFor="let serv of services" value={{serv.id}}>{{serv.name}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="add ml-auto mr-auto">
+                  <button (click)="addT()" class="btn btn-success btn-round">
+                    Ajouter
+                  </button>
+                  <button class="btn btn-danger btn-round" (click)="cancel()">
+                    Annuler
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Liste des affectations totales</h4>
+          </div>
+          <ag-grid-angular style="width: 1000px; height: 400px;" class="ag-theme-material" [rowData]="rowDataT"
+            [columnDefs]="columnDefsT" [modules]="modules" (rowSelected)="getId($event)"
+            (cellValueChanged)="edit($event)" [rowSelection]="'multiple'" rowMultiSelectWithClick="true"
+            [paginationAutoPageSize]="true" [pagination]="true" [frameworkComponents]="frameworkComponents"
+            (cellClicked)="getId($event)">
+
+          </ag-grid-angular>
+          <div class="add ml-auto mr-auto">
+            <button class="btn btn-danger btn-round" (click)="delete()">
+              Supprimer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

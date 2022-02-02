@@ -1,0 +1,74 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Ajouter un structure</h4>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row">
+
+                <div class="col-md-8 mb-3">
+                  <label class="control-label" for="Direction">Direction:</label>
+                  <select name="dir" *ngIf="getDirections()" [(ngModel)]="this.structure.direction"
+                    (change)="onSelectDirection($event.target.value)" class="form-control input-lg" id="direction">
+                    <option value="0">Selectionnez Direction</option>
+                    <option *ngFor="let direction of getDirections()" value={{direction.id}}>{{direction.name}}</option>
+                  </select>
+                </div>
+                <div class="col-md-8 mb-3">
+                  <label class="control-label" for="Divisions">Divisions:</label>
+                  <select name="div" *ngIf="divisions" [(ngModel)]="this.structure.division"
+                    (change)="onSelectDivision($event.target.value)" class="form-control input-lg" id="division">
+                    <option value="0">Selectionnez Division</option>
+                    <option *ngFor="let division of divisions" value={{division.id}}>{{division.name}}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-8 mb-3">
+                  <label class="control-label" for="Service">Service:</label>
+                  <select name="serv" class="form-control input-lg" id="service" [(ngModel)]="this.structure.service">
+                    <option value="0">Selectionnez Service</option>
+                    <option *ngFor="let service of services" value={{service.id}}>{{service.name}}</option>
+                  </select>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="add ml-auto mr-auto">
+                  <button (click)="add()" class="btn btn-success btn-round">
+                    Ajouter
+                  </button>
+                  <button class="btn btn-danger btn-round" (click)="cancel()">
+                    Annuler
+                  </button>
+                </div>
+              </div>
+              <p>(*):champs obligatoire</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Liste des structures</h4>
+          </div>
+          <ag-grid-angular style="width: 1020px; height: 350px;" class="ag-theme-material" [rowData]="rowData"
+            [columnDefs]="columnDefs" [modules]="modules" (rowSelected)="getId($event)"
+            (cellValueChanged)="edit($event)" [rowSelection]="'multiple'" rowMultiSelectWithClick="true"
+            [pagination]="true" [paginationAutoPageSize]="true"></ag-grid-angular>
+          <div class="add ml-auto mr-auto">
+            <button class="btn btn-danger btn-round" (click)="delete()">
+              Supprimer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,324 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <button class="btn btn-succes btn-round" (click)="displayaddpers()">
+      Ajouter un personnel
+    </button>
+
+    <div *ngIf="this.addpers" class="main-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-danger">
+              <h4 class="card-title">Ajouter un personnel</h4>
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="row">
+
+                  <div class="col-md-2 mb-3">
+                    <input type="text" id="nomfr" name="nomfr" class="form-control" [(ngModel)]="this.personnel.nom"
+                      required minlength="3" maxlength="20" />
+                    <label class="form-control-placeholder" for="nomfr">
+                      Nom FR *
+                    </label>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <input type="text" id="prenomfr" name="prenomfr" class="form-control"
+                      [(ngModel)]="this.personnel.prenom" required minlength="3" maxlength="20" />
+                    <label class="form-control-placeholder" for="prenomfr">
+                      Prénom FR *
+                    </label>
+                  </div>
+
+                  <div class="col-md-2 mb-3">
+                    <input type="text" id="nomar" name="nomar" class="form-control" [(ngModel)]="this.personnel.nom_AR"
+                      required minlength="3" maxlength="20" />
+                    <label class="form-control-placeholder" for="nomar">
+                      Nom AR *
+                    </label>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <input type="text" id="prenomar" name="prenomar" class="form-control"
+                      [(ngModel)]="this.personnel.prenom_AR" required minlength="3" maxlength="20" />
+                    <label class="form-control-placeholder" for="prenomar">
+                      Prénom AR *
+                    </label>
+                  </div>
+
+
+                  <div class="col-md-2 mb-3">
+                    <input type="radio" id="male" name="gender" value="homme" [(ngModel)]="this.personnel.sexe" />
+                    <label for="male">Homme</label>
+                    <br />
+                    <input type="radio" id="female" name="gender" value="femme" [(ngModel)]="this.personnel.sexe" />
+                    <label for="female">Femme</label>
+                  </div>
+                  <br />
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field>
+                      <mat-label>Date de naissance *</mat-label>
+                      <input matInput [matDatepicker]="picker1" ngDefaultControl
+                        [(ngModel)]="this.personnel.date_naissance" [ngModelOptions]="{ standalone: true }">
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-8 mb-3">
+                    <input type="text" id="adresse" name="adresse" class="form-control"
+                      [(ngModel)]="this.personnel.adresse" required minlength="3" maxlength="100" />
+                    <label class="form-control-placeholder" for="adresse">
+                      Adresse Domicile *
+                    </label>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <input type="tel" id="tél" name="telP" class="form-control" [(ngModel)]="this.personnel.telephone"
+                      required minlength="8" maxlength="8" />
+                    <label class="form-control-placeholder" for="tél">
+                      Téléphone *
+                    </label>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Email *</mat-label>
+                      <input matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+                        [(ngModel)]="this.personnel.email" placeholder="Ex. ex@example.com">
+                      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                        S'il vous plaît, mettez une adresse email valide !!
+                      </mat-error>
+
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <input type="text" id="cin" name="cin" class="form-control" required
+                      [(ngModel)]="this.personnel.cin" />
+                    <label class="form-control-placeholder" for="cin">
+                      CIN *
+                    </label>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <input type="text" id="cnrps" name="cnrps" class="form-control" required
+                      [(ngModel)]="this.personnel.matricule_CNRPS" />
+                    <label class="form-control-placeholder" for="cnrps">
+                      MAT CNRPS
+                    </label>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <input type="text" id="cnss" name="cnss" class="form-control" required
+                      [(ngModel)]="this.personnel.matricule_CNSS" />
+                    <label class="form-control-placeholder" for="cnss">
+                      MAT CNSS
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field>
+                      <mat-label>Date de recrutement *</mat-label>
+                      <input matInput [matDatepicker]="picker2" ngDefaultControl
+                        [(ngModel)]="this.personnel.date_recrutement" [ngModelOptions]="{ standalone: true }">
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field>
+                      <mat-label>Date de promotion </mat-label>
+                      <input id="datepromotion" name="datepromotion" matInput [matDatepicker]="picker3" ngDefaultControl
+                        [(ngModel)]="this.personnel.date_promotion" [ngModelOptions]="{ standalone: true }">
+                      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                      <mat-datepicker #picker3></mat-datepicker>
+
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field>
+                      <mat-label>Grade</mat-label>
+                      <mat-select name="grade" id="gradee" [(ngModel)]="this.personnel.grade.id_grade" ngDefaultControl
+                        required>
+                        <mat-option *ngFor="let item of this.grade" [value]="item.id_grade">
+                          {{ item.nom_grade_fr }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+
+                  <div class="col-md-2 mb-3">
+                    <input type="text" id="poste" name="poste" class="form-control" required
+                      [(ngModel)]="this.personnel.poste_occupe" />
+                    <label class="form-control-placeholder" for="poste">
+                      Poste occupé
+                    </label>
+                  </div>
+                  <div class="col-md-2 mb-3">
+                    <input type="text" id="solde" name="soldeinitial" class="form-control" required
+                      [(ngModel)]="this.personnel.soldeinitial" />
+                    <label class="form-control-placeholder" for="solde">
+                      Solde initial de congé *
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4 mb-3" style="margin-top: 25px;">
+                    <mat-form-field>
+                      <mat-label> Affectation </mat-label>
+                      <mat-select name="site" [(ngModel)]="this.personnel.site.idSite" [(ngModel)]="selectedLevel"
+                        ngDefaultControl required>
+                        <mat-option *ngFor="let item of this.site" [value]="item.idSite">
+                          {{ item.nom_etablissement_fr }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+
+                  <div class="col-md-8 mb-3">
+                    <table style="margin-top: -15px; font-size: small;" class="table table-borderless">
+                      <thead style="color: #919191;">
+                        <tr>
+                          <th style="font-size: inherit;">Nature Etablissement</th>
+                          <th style="font-size: inherit;">Gouvernorat</th>
+                          <th style="font-size: inherit;">Qualité de direction</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of this.site">
+                          <td *ngIf="item.idSite === selectedLevel ">{{ item.nature_etablissement_fr }}</td>
+                          <td *ngIf="item.idSite === selectedLevel ">{{ item.gouvernorat.nomGouvFR }}</td>
+                          <td *ngIf="item.idSite === selectedLevel ">{{ item.qualite_direction_fr }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-md-3 mb-3">
+                    <label class="control-label" for="Direction">Direction * </label>
+                    <select name="dir" *ngIf="getDirections()" [(ngModel)]="this.personnel.structure.direction"
+                      (change)="onSelectDirection($event.target.value)" class="form-control input-lg" id="direction">
+                      <option value="0">Selectionnez Direction</option>
+                      <option *ngFor="let direction of getDirections()" value={{direction.id}}>{{direction.name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    <label class="control-label" for="Divisions">Divisions:</label>
+                    <select name="div" *ngIf="divisions" [(ngModel)]="this.personnel.structure.division"
+                      (change)="onSelectDivision($event.target.value)" class="form-control input-lg" id="division">
+                      <option value="0">Selectionnez Division</option>
+                      <option *ngFor="let division of divisions" value={{division.id}}>{{division.name}}</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="control-label" for="Service">Service:</label>
+                    <select name="serv" class="form-control input-lg" id="service"
+                      [(ngModel)]="this.personnel.structure.service">
+                      <option value="0">Selectionnez Service</option>
+                      <option *ngFor="let service of services" value={{service.id}}>{{service.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4 mb-3" style="margin-top: 25px;">
+                    <mat-form-field>
+                      <mat-label>Fonction</mat-label>
+                      <mat-select name="fonction" [(ngModel)]="this.personnel.fonction.id_fonction"
+                        [(ngModel)]="selectedFunction" ngDefaultControl>
+                        <mat-option *ngFor="let item of this.fonction" [value]="item.id_fonction">
+                          {{ item.nom_fonction }}
+
+                        </mat-option>
+
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-8 mb-3">
+                    <table style="margin-top: -15px; font-size: small;" class="table table-borderless">
+                      <thead style="color: #919191;">
+                        <tr>
+                          <th style="font-size: inherit;">Type de fonction</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of this.fonction">
+                          <td *ngIf="item.id_fonction === selectedFunction ">{{ item.type_fonction }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+
+                </div>
+
+
+                <p>(*):champs obligatoire </p>
+              </form>
+            </div>
+            <div class="row">
+              <div class="add ml-auto mr-auto">
+                <button (click)="add()" type="submit" class="btn btn-success btn-round">
+                  Ajouter
+                </button>
+                <button class="btn btn-danger btn-round" (click)="cancel()">
+                  Annuler
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+
+            <h4 class="card-title ">Liste des personnels</h4>
+          </div>
+
+          <ag-grid-angular style="width: 1020px; height: 350px;" class="ag-theme-material" [rowData]="rowData"
+            [columnDefs]="columnDefs" [modules]="modules" (rowSelected)="getId($event)"
+            (cellValueChanged)="edit($event)" [rowSelection]="'multiple'" rowMultiSelectWithClick="true"
+            (cellClicked)="getId($event)" [frameworkComponents]="frameworkComponents" [pagination]="true"
+            [paginationAutoPageSize]="true">
+          </ag-grid-angular>
+
+          <div class="add ml-auto mr-auto">
+            <button class="btn btn-danger btn-round" (click)="delete()">
+              Supprimer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

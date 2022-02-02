@@ -1,0 +1,9 @@
+.spacing {
+  padding-left: 20px;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+.moyen {
+    margin-left: 50px;
+}
